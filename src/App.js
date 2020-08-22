@@ -9,6 +9,7 @@ const App = props => {
             { name: "Alex", "age": 29 },
             { name: "Nick", "age": 26 },
         ],
+        showPersons: true,
     });
 
     const switchNameHandler = ( e, newName = "Maximillianus" ) => {
@@ -36,6 +37,13 @@ const App = props => {
         });
     };
 
+    const togglePersonHandler = ( e ) => {
+        setPersonsState({
+            ...personsState,
+            showPersons: !personsState.showPersons,
+        });
+    };
+
     const styleButton = {
         font: "inherit",
         border: "1px solid blue",
@@ -49,21 +57,26 @@ const App = props => {
             <p>This is really working!</p>
             <button
                 style={styleButton}
-                onClick={switchNameHandler}>Switch Name
+                onClick={togglePersonHandler}>Toggle Persons
             </button>
-            <Person
-                click={switchNameHandler.bind(null, null, "Maxi")}
-                name={personsState.persons[0].name}
-                age={personsState.persons[0].age} />
-            <Person
-                click={switchNameHandler.bind(null, null, "Moxi")}
-                changed={nameChangedHandler}
-                name={personsState.persons[1].name}
-                age={personsState.persons[1].age} />
-            <Person
-                click={switchNameHandler}
-                name={personsState.persons[2].name}
-                age={personsState.persons[2].age} />
+            {
+                personsState.showPersons ?
+                    <div>
+                        <Person
+                            click={switchNameHandler.bind(null, null, "Maxi")}
+                            name={personsState.persons[0].name}
+                            age={personsState.persons[0].age} />
+                        <Person
+                            click={switchNameHandler.bind(null, null, "Moxi")}
+                            changed={nameChangedHandler}
+                            name={personsState.persons[1].name}
+                            age={personsState.persons[1].age} />
+                        <Person
+                            click={switchNameHandler}
+                            name={personsState.persons[2].name}
+                            age={personsState.persons[2].age} />
+                    </div> : null
+            }
         </div>
     );
 };
