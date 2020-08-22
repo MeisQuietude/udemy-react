@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import Persons              from "../components/Persons/Persons";
 import Cockpit              from "../components/Cockpit/Cockpit";
+import AuthContext          from "../context/auth-context";
 
 // const StyledButton = styled.button`
 //     background-color: ${props => props.alt ? "red" : "green"};
@@ -26,6 +27,7 @@ class App extends Component {
         ],
         showPersons: true,
         changeCounter: 0,
+        authenticated: false,
     };
 
     nameChangeHandler = ( event, id ) => {
@@ -35,11 +37,11 @@ class App extends Component {
             ...persons[personIndex],
             name: event.target.value,
         };
-        this.setState((prevState, props) => {
+        this.setState(( prevState, props ) => {
             return {
                 persons,
                 changeCounter: prevState.changeCounter + 1,
-            }
+            };
         });
     };
 
@@ -56,6 +58,10 @@ class App extends Component {
         });
     };
 
+    loginHandler = () => {
+        this.setState({ authenticated: true });
+    };
+
     render() {
         let persons = null;
         if ( this.state.showPersons ) {
@@ -67,11 +73,17 @@ class App extends Component {
 
         return (
             <div className="App">
-                <Cockpit
-                    personsLength={this.state.persons.length}
-                    showPersons={this.state.showPersons}
-                    click={this.togglePersonHandler} />
-                {persons}
+                <AuthContext.Provider
+                    value={{
+                        authenticated: this.state.authenticated,
+                        login: this.loginHandler }}>
+                    <Cockpit
+                        personsLength={this.state.persons.length}
+                        showPersons={this.state.showPersons}
+                        click={this.togglePersonHandler}
+                        login={this.loginHandler}/>
+                    {persons}
+                </AuthContext.Provider>
             </div>
         );
     }

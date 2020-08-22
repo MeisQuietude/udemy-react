@@ -26,6 +26,10 @@ const Cockpit = ( props ) => {
                 altstyle={props.showPersons ? 1 : 0}
                 onClick={props.click}>Toggle Persons
             </button>
+            <button
+                onClick={props.login}>
+                Login
+            </button>
         </div>
     );
 };
