@@ -7,6 +7,10 @@
     text-align: center;
 }
 
-button {
-    background-color: white;
+/*
+@media (min-width: 500px) {
+    .Person {
+        width: 450px;
+    }
 }
+*/
