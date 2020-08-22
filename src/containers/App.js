@@ -25,6 +25,7 @@ class App extends Component {
             { id: "003p", name: "Nick", "age": 26 },
         ],
         showPersons: true,
+        changeCounter: 0,
     };
 
     nameChangeHandler = ( event, id ) => {
@@ -34,7 +35,12 @@ class App extends Component {
             ...persons[personIndex],
             name: event.target.value,
         };
-        this.setState({ persons });
+        this.setState((prevState, props) => {
+            return {
+                persons,
+                changeCounter: prevState.changeCounter + 1,
+            }
+        });
     };
 
     deletePersonHandler = ( personIndex ) => {
@@ -54,9 +60,9 @@ class App extends Component {
         let persons = null;
         if ( this.state.showPersons ) {
             persons = <Persons
-                    persons={this.state.persons}
-                    click={this.deletePersonHandler}
-                    changed={this.nameChangeHandler} />;
+                persons={this.state.persons}
+                click={this.deletePersonHandler}
+                changed={this.nameChangeHandler} />;
         }
 
         return (
